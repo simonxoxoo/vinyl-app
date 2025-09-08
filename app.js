@@ -742,8 +742,8 @@ class VinylVault {
         const ctx = canvas.getContext('2d');
 
         const size = Math.min(img.width, img.height);
-        canvas.width = 300;
-        canvas.height = 300;
+        canvas.width = 200;
+        canvas.height = 200;
 
         // Clear previous drawing
         ctx.clearRect(0, 0, canvas.width, canvas.height);
