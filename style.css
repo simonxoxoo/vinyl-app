@@ -1197,12 +1197,29 @@ body::before {
   z-index: 2;
 }
 
-.record-artwork img {
+/* Container forces a square aspect ratio */
+.record-artwork {
+  position: relative;
   width: 100%;
+  aspect-ratio: 1 / 1;      /* always square */
+  overflow: hidden;          /* hide any overflow */
+  background: var(--color-secondary);
+  border-radius: var(--radius-base);
+}
+
+/* Every img inside .record-artwork fills and crops itself */
+.record-artwork img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: auto;
   height: 100%;
-  object-fit: cover;
-  display: block; /* removes image bottom whitespace */
-  border-radius: var(--radius-base); /* matches container radius */
+  min-width: 100%;
+  min-height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;         /* ensure center-crop */
+  object-position: center;
+  display: block;
 }
 
 .record-artwork.placeholder {
