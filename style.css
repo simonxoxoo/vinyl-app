@@ -1204,8 +1204,8 @@ body::before {
   aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: var(--radius-base);
-  margin-bottom: var(--space-16);    /* extra gap below cover */
-  background: var(--color-secondary);  
+  margin-bottom: var(--space-16); /* more space under cover */
+  background: var(--color-secondary);
 }
 
 /* Every img inside .record-artwork fills and crops itself */
@@ -1227,7 +1227,7 @@ body::before {
   inset: 0;
   background: radial-gradient(circle at center, 
     rgba(0,0,0,0.8) 15%, rgba(0,0,0,0.4) 16%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.8) 41%);
-  mask: radial-gradient(circle at center, transparent 28%, black 29%) no-repeat center/40% 40%;
+  mask: radial-gradient(circle at center, transparent 30%, black 30%) no-repeat center/40% 40%;
 }
 
 .record-info h3 {
