@@ -1197,14 +1197,12 @@ body::before {
   z-index: 2;
 }
 
-.record-artwork {
+.record-artwork img {
   width: 100%;
-  aspect-ratio: 1;
-  border-radius: var(--radius-base);
+  height: 100%;
   object-fit: cover;
-  background: var(--color-secondary);
-  margin-bottom: var(--space-12);
-  position: relative;
+  display: block; /* removes image bottom whitespace */
+  border-radius: var(--radius-base); /* matches container radius */
 }
 
 .record-artwork.placeholder {
