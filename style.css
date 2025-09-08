@@ -1221,7 +1221,7 @@ body::before {
   display: block;
 }
 
-.record-artwork.placeholder {
+.record-artwork:empty::before {
   content: '';
   position: absolute;
   inset: 0;
