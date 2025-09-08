@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinyl Vault - Your Digital Record Collection</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bcryptjs/2.4.3/bcrypt.min.js"></script>
+</head>
+<body>
+    <!-- Landing/Login Page -->
+    <div id="login-page" class="page active">
+        <div class="glass-container login-container">
+            <div class="vinyl-logo">
+                <div class="vinyl-record">
+                    <div class="vinyl-center"></div>
+                </div>
+            </div>
+            <h1>Vinyl Vault</h1>
+            <p class="subtitle">Your Digital Record Collection</p>
+            
+            <form id="login-form" class="auth-form">
+                <div class="form-group">
+                    <label for="login-username" class="form-label">Username</label>
+                    <input type="text" id="login-username" class="form-control" required>
+                    <div class="error-message" id="login-username-error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="login-password" class="form-label">Password</label>
+                    <input type="password" id="login-password" class="form-control" required>
+                    <div class="error-message" id="login-password-error"></div>
+                </div>
+                
+                <div class="form-group checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="remember-me">
+                        <span class="checkmark"></span>
+                        Remember me
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn btn--primary btn--full-width glow-button">
+                    Sign In
+                </button>
+            </form>
+            
+            <div class="auth-links">
+                <a href="#" id="show-register">Create Account</a>
+                <a href="#" id="show-forgot-password">Forgot Password?</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Registration Page -->
+    <div id="register-page" class="page">
+        <div class="glass-container register-container">
+            <h1>Create Account</h1>
+            
+            <form id="register-form" class="auth-form">
+                <div class="form-group">
+                    <label for="reg-username" class="form-label">Username</label>
+                    <input type="text" id="reg-username" class="form-control" required>
+                    <div class="error-message" id="reg-username-error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="reg-password" class="form-label">Password</label>
+                    <input type="password" id="reg-password" class="form-control" required>
+                    <div class="password-strength" id="password-strength"></div>
+                    <div class="error-message" id="reg-password-error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="reg-confirm-password" class="form-label">Confirm Password</label>
+                    <input type="password" id="reg-confirm-password" class="form-control" required>
+                    <div class="error-message" id="reg-confirm-password-error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="streaming-service" class="form-label">Preferred Streaming Service</label>
+                    <select id="streaming-service" class="form-control" required>
+                        <option value="">Choose streaming service</option>
+                        <option value="spotify">Spotify</option>
+                        <option value="apple">Apple Music</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="security-q1" class="form-label">Security Question 1</label>
+                    <select id="security-q1" class="form-control" required>
+                        <option value="">Choose a question</option>
+                        <option value="What was your first pet's name?">What was your first pet's name?</option>
+                        <option value="What city were you born in?">What city were you born in?</option>
+                        <option value="What was your first car?">What was your first car?</option>
+                    </select>
+                    <input type="text" id="security-a1" class="form-control" placeholder="Answer" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="security-q2" class="form-label">Security Question 2</label>
+                    <select id="security-q2" class="form-control" required>
+                        <option value="">Choose a question</option>
+                        <option value="What was your mother's maiden name?">What was your mother's maiden name?</option>
+                        <option value="What was your high school mascot?">What was your high school mascot?</option>
+                        <option value="What street did you grow up on?">What street did you grow up on?</option>
+                    </select>
+                    <input type="text" id="security-a2" class="form-control" placeholder="Answer" required>
+                </div>
+                
+                <button type="submit" class="btn btn--primary btn--full-width glow-button">
+                    Create Account
+                </button>
+            </form>
+            
+            <div class="auth-links">
+                <a href="#" id="back-to-login">Back to Sign In</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Page -->
+    <div id="forgot-password-page" class="page">
+        <div class="glass-container forgot-password-container">
+            <h1>Reset Password</h1>
+            
+            <form id="forgot-password-form" class="auth-form">
+                <div class="form-group">
+                    <label for="forgot-username" class="form-label">Username</label>
+                    <input type="text" id="forgot-username" class="form-control" required>
+                    <div class="error-message" id="forgot-username-error"></div>
+                </div>
+                
+                <div id="security-questions" class="hidden">
+                    <div class="form-group">
+                        <label id="security-q1-label" class="form-label"></label>
+                        <input type="text" id="security-a1-input" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label id="security-q2-label" class="form-label"></label>
+                        <input type="text" id="security-a2-input" class="form-control" required>
+                    </div>
+                </div>
+                
+                <div id="new-password-section" class="hidden">
+                    <div class="form-group">
+                        <label for="new-password" class="form-label">New Password</label>
+                        <input type="password" id="new-password" class="form-control" required>
+                        <div class="password-strength" id="new-password-strength"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirm-new-password" class="form-label">Confirm New Password</label>
+                        <input type="password" id="confirm-new-password" class="form-control" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn--primary btn--full-width glow-button" id="forgot-password-btn">
+                    Verify Account
+                </button>
+            </form>
+            
+            <div class="auth-links">
+                <a href="#" id="back-to-login-forgot">Back to Sign In</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboard-page" class="page">
+        <header class="dashboard-header glass-container">
+            <div class="header-left">
+                <div class="user-profile">
+                    <img id="user-avatar" src="" alt="Profile" class="profile-pic">
+                    <span id="user-name"></span>
+                </div>
+            </div>
+            
+            <div class="header-center">
+                <h1>Vinyl Vault</h1>
+            </div>
+            
+            <div class="header-right">
+                <button id="toggle-view" class="btn btn--secondary">
+                    <span id="view-text">All Records</span>
+                </button>
+                <button id="settings-btn" class="btn btn--secondary">Settings</button>
+                <button id="logout-btn" class="btn btn--outline">Logout</button>
+            </div>
+        </header>
+
+        <div class="dashboard-content">
+            <div class="toolbar glass-container">
+                <div class="toolbar-left">
+                    <button id="add-record-btn" class="btn btn--primary glow-button">+ Add Record</button>
+                    <button id="bulk-operations-btn" class="btn btn--secondary">Bulk Actions</button>
+                </div>
+                
+                <div class="toolbar-center">
+                    <div class="search-container">
+                        <input type="text" id="search-input" placeholder="Search by artist or title..." class="form-control">
+                    </div>
+                </div>
+                
+                <div class="toolbar-right">
+                    <select id="sort-select" class="form-control">
+                        <option value="dateAdded">Date Added</option>
+                        <option value="artist-asc">Artist (A-Z)</option>
+                        <option value="artist-desc">Artist (Z-A)</option>
+                        <option value="rating-desc">Rating (High-Low)</option>
+                        <option value="rating-asc">Rating (Low-High)</option>
+                    </select>
+                    
+                    <select id="filter-select" class="form-control">
+                        <option value="all">All Ratings</option>
+                        <option value="5">5 Stars Only</option>
+                        <option value="4">4+ Stars</option>
+                        <option value="3">3+ Stars</option>
+                        <option value="unrated">Unrated</option>
+                    </select>
+                    
+                    <button id="clear-filters-btn" class="btn btn--outline">Clear Filters</button>
+                </div>
+            </div>
+
+            <div class="stats-panel glass-container collapsed" id="stats-panel">
+                <div class="stats-header">
+                    <h3>Collection Statistics</h3>
+                    <button id="toggle-stats" class="btn btn--outline">Show</button>
+                </div>
+                <div class="stats-content">
+                    <div class="stat-item">
+                        <span class="stat-label">Total Records:</span>
+                        <span id="total-records">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Average Rating:</span>
+                        <span id="average-rating">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Wishlist Count:</span>
+                        <span id="wishlist-count">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="bulk-toolbar" class="bulk-toolbar glass-container hidden">
+                <div class="bulk-actions">
+                    <span id="selected-count">0 selected</span>
+                    <button id="bulk-rate-btn" class="btn btn--secondary">Rate Selected</button>
+                    <button id="bulk-wishlist-btn" class="btn btn--secondary">Toggle Wishlist</button>
+                    <button id="bulk-delete-btn" class="btn btn--outline">Delete Selected</button>
+                    <button id="cancel-bulk-btn" class="btn btn--outline">Cancel</button>
+                </div>
+            </div>
+
+            <div id="records-grid" class="records-grid">
+                <!-- Records will be dynamically populated -->
+            </div>
+
+            <div id="empty-state" class="empty-state hidden">
+                <div class="vinyl-record large">
+                    <div class="vinyl-center"></div>
+                </div>
+                <h3>Your collection is empty</h3>
+                <p>Start building your vinyl collection by adding your first record!</p>
+                <button class="btn btn--primary glow-button" onclick="document.getElementById('add-record-btn').click()">
+                    Add Your First Record
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Page -->
+    <div id="settings-page" class="page">
+        <div class="settings-container">
+            <div class="settings-header glass-container">
+                <button id="back-to-dashboard" class="btn btn--outline">← Back to Dashboard</button>
+                <h1>Settings</h1>
+            </div>
+
+            <div class="settings-content">
+                <div class="settings-section glass-container">
+                    <h3>Profile</h3>
+                    <div class="profile-settings">
+                        <div class="profile-pic-container">
+                            <img id="settings-avatar" src="" alt="Profile" class="profile-pic large">
+                            <button id="change-avatar-btn" class="btn btn--secondary">Change Picture</button>
+                            <input type="file" id="avatar-upload" accept="image/*" class="hidden">
+                        </div>
+                        <div class="profile-info">
+                            <div class="form-group">
+                                <label class="form-label">Username</label>
+                                <span id="settings-username" class="readonly-field"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="theme-select" class="form-label">Theme</label>
+                                <select id="theme-select" class="form-control">
+                                    <option value="auto">Auto</option>
+                                    <option value="light">Light</option>
+                                    <option value="dark">Dark</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="settings-streaming-service" class="form-label">Streaming Service</label>
+                                <select id="settings-streaming-service" class="form-control">
+                                    <option value="spotify">Spotify</option>
+                                    <option value="apple">Apple Music</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-section glass-container">
+                    <h3>Security</h3>
+                    <button id="change-password-btn" class="btn btn--secondary">Change Password</button>
+                    <button id="manage-security-questions-btn" class="btn btn--secondary">Security Questions</button>
+                </div>
+
+                <div class="settings-section glass-container">
+                    <h3>Data Management</h3>
+                    <div class="data-actions">
+                        <button id="export-csv-btn" class="btn btn--secondary">Export as CSV</button>
+                        <button id="backup-data-btn" class="btn btn--secondary">Backup Data</button>
+                        <button id="restore-data-btn" class="btn btn--secondary">Restore Data</button>
+                        <button id="import-data-btn" class="btn btn--secondary">Import Data</button>
+                        <input type="file" id="restore-file-input" accept=".json" class="hidden">
+                        <input type="file" id="import-file-input" accept=".json,.csv" class="hidden">
+                    </div>
+                </div>
+
+                <div class="settings-section glass-container danger-zone">
+                    <h3>Danger Zone</h3>
+                    <button id="clear-all-data-btn" class="btn btn--outline danger">Clear All Data</button>
+                    <button id="delete-account-btn" class="btn btn--outline danger">Delete Account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Record Modal -->
+    <div id="record-modal" class="modal hidden">
+        <div class="modal-overlay" id="record-modal-overlay"></div>
+        <div class="modal-content glass-container">
+            <div class="modal-header">
+                <h2 id="record-modal-title">Add Record</h2>
+                <button id="record-modal-close" class="modal-close">&times;</button>
+            </div>
+            
+            <form id="record-form" class="modal-body">
+                <div class="record-form-layout">
+                    <div class="artwork-section">
+                        <div class="artwork-preview" id="artwork-preview">
+                            <div class="artwork-placeholder">
+                                <div class="vinyl-record">
+                                    <div class="vinyl-center"></div>
+                                </div>
+                                <p>Upload Album Art</p>
+                            </div>
+                            <img id="artwork-image" class="hidden" alt="Album artwork">
+                        </div>
+                        <button type="button" id="artwork-upload-btn" class="btn btn--secondary">Choose Image</button>
+                        <input type="file" id="artwork-file" accept="image/*" class="hidden">
+                    </div>
+                    
+                    <div class="record-details">
+                        <div class="form-group">
+                            <label for="record-artist" class="form-label">Artist *</label>
+                            <input type="text" id="record-artist" class="form-control" required>
+                            <div class="error-message" id="record-artist-error"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="record-title" class="form-label">Album Title *</label>
+                            <input type="text" id="record-title" class="form-control" required>
+                            <div class="error-message" id="record-title-error"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Rating</label>
+                            <div class="star-rating" id="record-rating">
+                                <span class="star" data-rating="1">★</span>
+                                <span class="star" data-rating="2">★</span>
+                                <span class="star" data-rating="3">★</span>
+                                <span class="star" data-rating="4">★</span>
+                                <span class="star" data-rating="5">★</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="record-wishlist">
+                                <span class="checkmark"></span>
+                                Add to Wishlist
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            
+            <div class="modal-footer">
+                <button type="button" id="record-modal-cancel" class="btn btn--outline">Cancel</button>
+                <button type="submit" form="record-form" id="record-modal-save" class="btn btn--primary glow-button">Save Record</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirm-modal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content glass-container">
+            <div class="modal-header">
+                <h2 id="confirm-title">Confirm Action</h2>
+            </div>
+            <div class="modal-body">
+                <p id="confirm-message"></p>
+                <div id="confirm-password-section" class="form-group hidden">
+                    <label for="confirm-password-input" class="form-label">Enter your password to confirm</label>
+                    <input type="password" id="confirm-password-input" class="form-control">
+                    <div class="error-message" id="confirm-password-error"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="confirm-cancel" class="btn btn--outline">Cancel</button>
+                <button id="confirm-ok" class="btn btn--primary danger">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div id="toast-container"></div>
+
+    <!-- Canvas for image cropping -->
+    <canvas id="crop-canvas" class="hidden"></canvas>
+
+    <script src="app.js"></script>
+</body>
+</html>
