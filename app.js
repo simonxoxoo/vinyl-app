@@ -738,22 +738,22 @@ class VinylVault {
     }
 
     cropImageToSquare(img) {
-        const canvas = document.getElementById('crop-canvas');
-        const ctx = canvas.getContext('2d');
+    const canvas = document.getElementById('crop-canvas');
+    const ctx = canvas.getContext('2d');
+    
+    const size = Math.min(img.width, img.height);
+    canvas.width = 300;
+    canvas.height = 300;
 
-        const size = Math.min(img.width, img.height);
-        canvas.width = 200;
-        canvas.height = 200;
-
-        // Clear previous drawing
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        const sourceX = (img.width - size) / 2;
-        const sourceY = (img.height - size) / 2;
-
-        ctx.drawImage(img, sourceX, sourceY, size, size, 0, 0, canvas.width, canvas.height);
-        return canvas.toDataURL('image/jpeg', 0.8);
-    }
+    // Clear previous drawing
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    const sourceX = (img.width - size) / 2;
+    const sourceY = (img.height - size) / 2;
+    
+    ctx.drawImage(img, sourceX, sourceY, size, size, 0, 0, canvas.width, canvas.height);
+    return canvas.toDataURL('image/jpeg', 0.8);
+}
 
     showArtworkPreview(dataUrl) {
         const preview = document.getElementById('artwork-preview');
