@@ -1,4 +1,73 @@
-        // Forgot password form
+class VinylApp {
+    constructor() {
+        this.currentUser = null;
+        this.records = [];
+        this.initializeApp();
+    }
+
+    initializeApp() {
+        // Page navigation event listeners
+        document.getElementById('show-register')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.showPage('register-page');
+        });
+
+        document.getElementById('show-forgot-password')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.showPage('forgot-password-page');
+        });
+
+        document.getElementById('back-to-login')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.showPage('login-page');
+        });
+
+        document.getElementById('back-to-login-forgot')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.showPage('login-page');
+        });
+    }
+
+    showPage(pageId) {
+        // Hide all pages
+        document.querySelectorAll('.page').forEach(page => {
+            page.classList.remove('active');
+        });
+
+        // Show the requested page
+        const targetPage = document.getElementById(pageId);
+        if (targetPage) {
+            targetPage.classList.add('active');
+        }
+    }
+
+    getUsers() {
+        // Mock user data for testing
+        return {
+            'testuser': {
+                password: 'password123',
+                securityQs: {
+                    q1: 'What was your first pet\'s name?',
+                    a1: 'fluffy',
+                    q2: 'What city were you born in?',
+                    a2: 'paris'
+                }
+            }
+        };
+    }
+
+    showToast(message, type) {
+        console.log(`${type.toUpperCase()}: ${message}`);
+    }
+
+    async resetPassword(username, securityAnswers, newPassword) {
+        console.log('Password reset would be performed here');
+        this.showToast('Password reset successfully!', 'success');
+        this.showPage('login-page');
+    }
+
+    // Forgot password form
+    initializeForgotPasswordForm() {
         const forgotForm = document.getElementById('forgot-password-form');
         if (forgotForm) {
             let currentUsername = ''; // Store username outside event handler
@@ -103,3 +172,11 @@
                 console.log('=== END FORGOT PASSWORD DEBUG ===\n');
             });
         }
+    }
+}
+
+// Initialize the app when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    const app = new VinylApp();
+    app.initializeForgotPasswordForm();
+});
